@@ -7,9 +7,9 @@ grunt>REGISTER '/usr/local/pig/lib/piggybank.jar';
 
 grunt>Data = LOAD '/home/acadgild/data/Crimes_2001_to_present.csv' using org.apache.pig.piggybank.storage.CSVExcelStorage(',' , 'NO_MULTILINE','UNIX','SKIP_INPUT_HEADER') as (ID: chararray, Case_Num: chararray, date: chararray, block: chararray, IUCR: chararray, type: chararray, desc: chararray, arrest:chararray, domestic :chararray, beat:chararray, district:chararray, ward:chararray, area:chararray, FBI_Code:chararray, X:chararray, Y:chararray, year: int , updated_on : chararray, lat: chararray, long: chararray, location:chararray);
 grunt>FilterData = FILTER Data BY type =='THEFT';
-grunt>GrpData = GROUP FilterData BY district;
-grunt>CntData = FOREACH GrpData GENERATE FLATTEN(group) AS district, COUNT(FilterData.district) ;
-grunt>DUMP CntData;
+grunt>GroupData = GROUP FilterData BY district;
+grunt>CD = FOREACH GroupData GENERATE FLATTEN(group) AS district, COUNT(FilterData.district) ;
+grunt>DUMP CD;
 
 (0111,1112)
 (0112,920)
@@ -285,4 +285,3 @@ grunt>DUMP CntData;
 (2533,587)
 (2534,179)
 (2535,152)
-grunt> 
