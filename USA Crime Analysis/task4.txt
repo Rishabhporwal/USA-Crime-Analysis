@@ -1,8 +1,5 @@
 4.Write a PIG script to calculate the number of arrests done between october 2014 and october 2015
 
-PIG
-----
-
 [acadgild@localhost ~]$ pig -x local 
 
 grunt>REGISTER '/usr/local/pig/lib/piggybank.jar';
@@ -11,8 +8,7 @@ grunt>Data = LOAD '/home/acadgild/data/Crimes_2001_to_present.csv' using org.apa
 grunt>DateGen = FOREACH Data GENERATE ToDate(SUBSTRING(date,0,10), 'MM/dd/yyyy') as (dt:datetime);
 grunt>FilterLDate = FILTER DateGen BY DaysBetween(dt,(datetime)ToDate('10/01/2014', 'MM/dd/yyyy')) >=(long)0;
 grunt>FilterUDate = FILTER FilterLDate BY DaysBetween(dt,(datetime)ToDate('10/01/2015', 'MM/dd/yyyy')) <=(long)0;
-grunt>GrpData = GROUP FilterUDate ALL;
-grunt>CntData = FOREACH GrpData GENERATE  COUNT(FilterUDate) ;
-grunt>DUMP CntData;
+grunt>GroupData = GROUP FilterUDate ALL;
+grunt>CD = FOREACH GroupData GENERATE  COUNT(FilterUDate) ;
+grunt>DUMP CD;
 (244101)
-grunt> 
