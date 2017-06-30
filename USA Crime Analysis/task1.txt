@@ -4,9 +4,9 @@
 grunt>REGISTER '/usr/local/pig/lib/piggybank.jar';
 
 grunt>Data = LOAD '/home/acadgild/data/Crimes_2001_to_present.csv' using org.apache.pig.piggybank.storage.CSVExcelStorage(',' , 'NO_MULTILINE','UNIX','SKIP_INPUT_HEADER') as (ID: chararray, Case_Num: chararray, date: chararray, block: chararray, IUCR: chararray, type: chararray, desc: chararray, arrest:chararray, domestic :chararray, beat:chararray, district:chararray, ward:chararray, area:chararray, FBI_Code:chararray, X:chararray, Y:chararray, year: int , updated_on : chararray, lat: chararray, long: chararray, location:chararray);
-grunt>GrpData = GROUP Data BY FBI_Code;
-grunt>CntData = FOREACH GrpData GENERATE FLATTEN(group) AS FBI_Code, COUNT(Data.FBI_Code) ;
-grunt>DUMP CntData;
+grunt>GroupData = GROUP Data BY FBI_Code;
+grunt>CD = FOREACH GroupData GENERATE FLATTEN(group) AS FBI_Code, COUNT(Data.FBI_Code) ;
+grunt>DUMP CD;
 
 (0,2)
 (1,3931)
